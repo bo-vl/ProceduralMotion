@@ -1,5 +1,3 @@
-Here is your updated README with the added keybindings and a brief explanation of their functions:
-
 ---
 
 # Procedural Fish Animation
