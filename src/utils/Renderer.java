@@ -20,22 +20,16 @@ public class Renderer {
 
         glColor3f(rgba[0], rgba[1], rgba[2]);
 
+        glBegin(GL_LINE_LOOP);
         for (int i = 0; i < segments; i++) {
-            double angle1 = (i * 2 * Math.PI) / segments;
-            double angle2 = ((i + 1) * 2 * Math.PI) / segments;
-
-            Vector2f start = new Vector2f(
-                    center.x + (float) (radius * Math.cos(angle1)),
-                    center.y + (float) (radius * Math.sin(angle1))
+            double angle = (i * 2 * Math.PI) / segments;
+            Vector2f point = new Vector2f(
+                    center.x + (float) (radius * Math.cos(angle)),
+                    center.y + (float) (radius * Math.sin(angle))
             );
-
-            Vector2f end = new Vector2f(
-                    center.x + (float) (radius * Math.cos(angle2)),
-                    center.y + (float) (radius * Math.sin(angle2))
-            );
-
-            Add2DLine(start, end, color);
+            glVertex2f(point.x, point.y);
         }
+        glEnd();
     }
 
     public static void AddFilledCircle(Vector2f center, float radius, int segments, int color) {
@@ -57,5 +51,4 @@ public class Renderer {
 
         glEnd();
     }
-
 }

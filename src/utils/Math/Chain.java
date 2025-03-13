@@ -82,8 +82,6 @@ public class Chain {
     }
 
     public void display() {
-        System.out.println("Rendering Chain...");
-
         for (int i = 0; i < joints.size() - 1; i++) {
             Vector2f startJoint = joints.get(i);
             Vector2f endJoint = joints.get(i + 1);

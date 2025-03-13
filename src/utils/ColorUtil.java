@@ -1,7 +1,5 @@
 package utils;
 
-import java.awt.*;
-
 public class ColorUtil {
     public static float[] RGBA(float r, float g, float b, float a) {
         return new float[]{r, g, b, a};

@@ -25,6 +25,14 @@ public class Main {
     public static float mouseX = 0;
     public static float mouseY = 0;
 
+    private boolean showChain = false;
+    private boolean autonomousMovement = false;
+    private boolean filledCircles = true;
+
+    public static void main(String[] args) {
+        new Main().run();
+    }
+
     private void run() {
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -55,6 +63,18 @@ public class Main {
         glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
             if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
                 glfwSetWindowShouldClose(window, true);
+
+            if (key == GLFW_KEY_C && action == GLFW_RELEASE) {
+                showChain = !showChain;
+            }
+
+            if (key == GLFW_KEY_A && action == GLFW_RELEASE) {
+                autonomousMovement = !autonomousMovement;
+            }
+
+            if (key == GLFW_KEY_F && action == GLFW_RELEASE) {
+                filledCircles = !filledCircles;
+            }
         });
 
         glfwSetFramebufferSizeCallback(window, (window, width, height) -> {
@@ -97,9 +117,13 @@ public class Main {
 
             updateMousePosition();
 
-            fish.resolve(mouseX, mouseY);
+            if (autonomousMovement) {
+                fish.autonomousMove(windowWidth, windowHeight);
+            } else {
+                fish.resolve(mouseX, mouseY);
+            }
 
-            fish.display();
+            fish.display(showChain, filledCircles);
 
             glfwSwapBuffers(window);
             glfwPollEvents();
@@ -114,8 +138,6 @@ public class Main {
 
             mouseX = (float) xPos.get(0);
             mouseY = windowHeight - (float) yPos.get(0);
-
-            System.out.println("Mouse Position: " + mouseX + ", " + mouseY);
         }
     }
 
@@ -125,9 +147,5 @@ public class Main {
         glOrtho(0.0f, windowWidth, 0.0f, windowHeight, -1.0f, 1.0f);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-    }
-
-    public static void main(String[] args) {
-        new Main().run();
     }
 }
